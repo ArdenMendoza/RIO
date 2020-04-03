@@ -1,0 +1,17 @@
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\Jarvis Mark 1.0.exe.config
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\Jarvis Mark 1.0.exe
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\Jarvis Mark 1.0.pdb
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\J_Lib.dll
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\System.Data.SqlServerCe.dll
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\J_Lib.pdb
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\bin\Debug\J_Lib.dll.config
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis Mark 1.0.csprojAssemblyReference.cache
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\JarvisSystem_2._0.frmCustom.resources
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\JarvisSystem_2._0.frmEmail.resources
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis_Mark_1._0.frmMain.resources
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis_Mark_1._0.Properties.Resources.resources
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis Mark 1.0.csproj.GenerateResource.cache
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis Mark 1.0.csproj.CoreCompileInputs.cache
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis Mark 1.0.csproj.CopyComplete
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis Mark 1.0.exe
+C:\Users\amendoza2\Source\Repos\Monday_AI\Jarvis Mark 1.0\Jarvis Mark 1.0\obj\x86\Debug\Jarvis Mark 1.0.pdb
