@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace rioSystem_2._0
+namespace RIO
 {
     public partial class frmEmail : Form
     {

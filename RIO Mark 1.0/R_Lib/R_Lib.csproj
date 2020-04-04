@@ -62,7 +62,8 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DBCon.cs" />
     <Compile Include="db_scripts.cs" />
-    <Compile Include="J_Lib.cs" />
+    <Compile Include="R_DBCommands.cs" />
+    <Compile Include="R_Lib.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\WebServiceConverterLength\Reference.cs">
       <AutoGen>True</AutoGen>

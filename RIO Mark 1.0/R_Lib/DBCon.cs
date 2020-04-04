@@ -24,7 +24,8 @@ namespace R_Lib
             R_db_path = v1;
         }
 
-        public void conn_init()
+
+        public ActionResult conn_init()
         {
             conn = new SqlCeConnection();
 
@@ -36,7 +37,6 @@ namespace R_Lib
 
             R_conn_string = @"Data Source=" + R_db_path + "; Password=RIODB01";
             conn.ConnectionString = R_conn_string;
-
             //set cmd command's connection
             cmd = conn.CreateCommand();
 
@@ -44,24 +44,35 @@ namespace R_Lib
             SqlCeEngine en = new SqlCeEngine();
             en.LocalConnectionString = R_conn_string;
 
-            //If db is not existing, create it.    
-            if (!File.Exists(R_db_path))
+            try
             {
-                try
+                //If db is not existing, create it.    
+                if (!File.Exists(R_db_path))
                 {
-                    en.CreateDatabase();
-                    //speech.R_Speak("Database created.");
-                    Execute_Scripts();
-                    Insert_default_data();
+                    try
+                    {
+                        en.CreateDatabase();
+                        //speech.R_Speak("Database created.");
+                        Execute_Scripts();
+                        Insert_default_data();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                        // speech.R_Speak("Error while setting up database('conn_innit()'): \r\n" + ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    //speech.R_Speak("Error while setting up database('conn_innit()'): \r\n" + ex.Message);
-                }
+                // try { en.Upgrade(R_conn_string); } catch (Exception ex) { throw ex; }
+
+                return new ActionResult() { success = true, msg = "db created!" };
+            }
+            catch (Exception ex)
+            {
+                return new ActionResult() { success = false, msg = ex.Message };
             }
 
             #region upgrade engine if old version of sqlce is used.
-            try { en.Upgrade(R_conn_string); } catch { }
+
             #endregion upgrade engine
 
         }

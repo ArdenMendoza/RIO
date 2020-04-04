@@ -2,13 +2,13 @@
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using rio_Mark_1._0.Properties;
+using rio.Properties;
 using System.Drawing;
 using System.Diagnostics;
 using System.Data.SqlServerCe;
-using rio_Mark_1._0;
+using RIO;
 
-namespace rioSystem_2._0
+namespace RIO
 {
     public partial class frmCustom : Form
     {
@@ -22,7 +22,7 @@ namespace rioSystem_2._0
         public frmCustom()
         {
             InitializeComponent();
-            R_Speech = new R_Lib.R_Speech(R_Forms.getForm<frmMain>().rt_Convo);
+            R_Speech = new R_Lib.R_Speech();
             string StartUpPath = Application.StartupPath;
             db.conn = new SqlCeConnection(db.R_conn_string);
             db.conn.ConnectionString = db.R_conn_string;
@@ -53,7 +53,7 @@ namespace rioSystem_2._0
 
         }
 
-        internal string slideDir;
+        internal bool isShown;
         void loadUserCommands()
         {
             lvUsrCmds.Items.Clear();
@@ -75,12 +75,14 @@ namespace rioSystem_2._0
                     lvUsrCmds.Columns[2].Width = -2;
                 }
             }
-            catch (Exception ex) { MessageBox.Show(R_Speech.R_SpeakAsync("An error occured while trying to load user commands('loadUserCommands()'). \r\n" + ex.Message)); }
+            catch (Exception ex) {
+                Program.UISpeak("An error occured while trying to load user commands('loadUserCommands()'). \r\n" + ex.Message);
+            }
             finally { db.conn.Close(); }
         }
         private void tmrSlide_Tick(object sender, EventArgs e)
         {
-            if (slideDir == "in")
+            if (isShown)
             {
                 if (this.Top > -20)
                 {
@@ -88,7 +90,7 @@ namespace rioSystem_2._0
                 }
                 this.Top = this.Top + 10;
             }
-            else if (slideDir == "out")
+            else
             {
                 if (this.Top <= -1 * this.Height)
                 {
@@ -177,7 +179,9 @@ namespace rioSystem_2._0
                 db.cmd.ExecuteNonQuery();
                 R_Speech.R_SpeakAsync("new commands added");
             }
-            catch(Exception ex) { MessageBox.Show(R_Speech.R_SpeakAsync("An error occured while trying to add custom commands.\r\n" + ex.Message)); }
+            catch(Exception ex) {
+                Program.UISpeak("An error occured while trying to add custom commands.\r\n" + ex.Message);
+            }
             finally { db.conn.Close(); }
             loadUserCommands();
         }

@@ -1,4 +1,4 @@
-﻿namespace rioSystem_2._0
+﻿namespace RIO
 {
     partial class frmEmail
     {
@@ -81,7 +81,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.BackgroundImage = global::rio_Mark_1._0.Properties.Resources.WindowBg;
+            this.BackgroundImage = global::rio.Properties.Resources.WindowBg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(387, 201);
             this.Controls.Add(this.lblTitle);

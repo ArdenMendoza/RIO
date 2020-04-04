@@ -1,6 +1,6 @@
-﻿namespace rioSystem_2._0
+﻿namespace RIO
 {
-    partial class frmCustom
+    public partial class frmCustom
     {
         /// <summary>
         /// Required designer variable.

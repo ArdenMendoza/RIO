@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace rioSystem_2._0
+namespace RIO
 {
     public class FormControls
     {

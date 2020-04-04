@@ -1,4 +1,4 @@
-﻿namespace rio_Mark_1._0
+﻿namespace RIO
 {
     partial class frmMain
     {
@@ -110,9 +110,9 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox img_rio;
-        private System.Windows.Forms.NotifyIcon notifIcon;
-        private System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.PictureBox img_rio;
+        public System.Windows.Forms.NotifyIcon notifIcon;
+        public System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.RichTextBox rt_Convo;
     }
 }

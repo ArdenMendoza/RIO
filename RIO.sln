@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R_Lib", "RIO Mark 1.0\R_Lib\R_Lib.csproj", "{4661C1EF-6F94-4C7C-A852-F75667DEDAB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RIO Mark 1.0", "RIO Mark 1.0\RIO Mark 1.0\RIO Mark 1.0.csproj", "{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RIO", "RIO Mark 1.0\RIO Mark 1.0\RIO.csproj", "{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +24,7 @@ Global
 		{4661C1EF-6F94-4C7C-A852-F75667DEDAB9}.Release|x86.ActiveCfg = Release|Any CPU
 		{4661C1EF-6F94-4C7C-A852-F75667DEDAB9}.Release|x86.Build.0 = Release|Any CPU
 		{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}.Debug|Any CPU.Build.0 = Debug|x86
 		{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}.Debug|x86.ActiveCfg = Debug|x86
 		{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}.Debug|x86.Build.0 = Debug|x86
 		{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}.Release|Any CPU.ActiveCfg = Release|x86

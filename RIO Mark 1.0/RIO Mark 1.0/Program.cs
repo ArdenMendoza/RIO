@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace rio_Mark_1._0
+namespace RIO
 {
     static class Program
     {
@@ -16,6 +16,13 @@ namespace rio_Mark_1._0
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
+        }
+        static R_Lib.R_Speech R_Speech;
+
+        public static void UISpeak(string msg)
+        {
+            R_Speech.R_SpeakAsync(msg);
+            MessageBox.Show(msg);
         }
     }
 }

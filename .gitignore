@@ -3,3 +3,13 @@
 ################################################################################
 
 /.vs/RIO/v16/Server/sqlite3
+/.vs/RIO/v16
+/RIO Mark 1.0/RIO Mark 1.0/bin
+bin
+/RIO Mark 1.0/RIO Mark 1.0/obj
+/RIO Mark 1.0/RIO Mark 1.0/*.user
+/RIO Mark 1.0/R_Lib/bin
+/RIO Mark 1.0/R_Lib/obj
+bin
+obj
+/RIO Mark 1.0/R_Lib/R_Lib.csproj.user

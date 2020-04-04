@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace rio_Mark_1._0.Properties {
+namespace rio.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

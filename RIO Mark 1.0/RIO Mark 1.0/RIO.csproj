@@ -8,12 +8,13 @@
     <ProjectGuid>{34DBF048-3CBD-4B76-B054-4CA99EE3D2B8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rio_Mark_1._0</RootNamespace>
-    <AssemblyName>RIO Mark 1.0</AssemblyName>
+    <RootNamespace>rio</RootNamespace>
+    <AssemblyName>RIO</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -74,6 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormControls.cs" />
     <Compile Include="frmCustom.cs">
       <SubType>Form</SubType>
