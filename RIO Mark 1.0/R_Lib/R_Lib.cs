@@ -28,35 +28,19 @@ namespace R_Lib
         public string msg { get; set; }
     }
 
-    public class R_Speech
+    public partial class R_Speech
     {
-        public R_Speech()
+        public R_Speech(RichTextBox convo)
         {
             //Initialize database connection properties
             db.conn_init();
-
-            #region setup speech recognizer properties
-            try
-            {
-                R_recognizer.SetInputToDefaultAudioDevice(); //load default microphone
-                R_recognizer.RecognizeAsync(RecognizeMode.Multiple);  //sets the program to interpret multiple commands
-                R_SpeakAsync("Ready");
-            }
-            catch (Exception ex)
-            {
-                //R_Speech.R_SpeakAsync(ex.ToString());
-                MessageBox.Show(ex.ToString());
-                R_SpeakAsync("Loaded with errors.");
-            }
-            #endregion setup speech recognizer properties
+            rtb_Convo = convo;
         }
+        public RichTextBox rtb_Convo { get; set; }
 
         //speech
         public SpeechRecognitionEngine R_recognizer = new SpeechRecognitionEngine(new CultureInfo("en-US"));
         SpeechSynthesizer RIO = new SpeechSynthesizer();
-        public string userSpeech;
-        public string commandReply;
-
         public bool Dictation_Switch;
         public bool google_search_switch;
 
@@ -72,23 +56,25 @@ namespace R_Lib
         public Grammar R_SongGrammar;
 
         //misc
-        public string R_QEvent;
-        public string R_AEvent;
+        public string QEvent;
+        public string AEvent;
 
         //User info
-        public string R_userName = Environment.UserName;
+        public string userName = Environment.UserName;
 
         //rio Speak methods
-        public void R_Speak(string phrase)
+        public void Speak(string phrase)
         {
+            rtb_Convo.AppendText("RIO: " + phrase);
             RIO.Speak(phrase);
         }
-        public void R_SpeakAsync(string phrase)
+        public void SpeakAsync(string phrase)
         {
+            rtb_Convo.AppendText("RIO: " + phrase);
             RIO.SpeakAsync(phrase);
         }
 
-        public void R_SpeakCancelAll()
+        public void SpeakCancelAll()
         {
             RIO.SpeakAsyncCancelAll();
         }
@@ -117,11 +103,11 @@ namespace R_Lib
 
                 R_recognizer.SpeechRecognized -= new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
                 R_recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(SpeechRecognized);
-                //R_Speech.R_SpeakAsync("System commands loaded");
+                SpeakAsync("System commands loaded");
             }
             catch (Exception ex)
             {
-                R_SpeakAsync("Connection Unsuccessful: " + ex.Message);
+                SpeakAsync("Connection Unsuccessful: " + ex.Message);
                 MessageBox.Show("Connection Unsuccessful: " + ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -156,19 +142,16 @@ namespace R_Lib
                     R_recognizer.SpeechRecognized -= new EventHandler<SpeechRecognizedEventArgs>(Shell_SpeechRecognized); //Unsubscribe to previous event. This part is to prevent double execution of Recognized speech event.
                     R_recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Shell_SpeechRecognized); //Subscribe to previous event again. 
 
-                    //R_Speech.R_SpeakAsync("User commands loaded");
+                    SpeakAsync("User commands loaded");
                 }
                 else
                 {
                     string msg = "No user commands found. Would you like to add a command now?";
-                    R_SpeakAsync(msg);
+                    SpeakAsync(msg);
                     DialogResult res = MessageBox.Show(msg, "No user commands loaded", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (res == DialogResult.Yes)
                     {
                         return new ActionResult() { success = true, msg = "AddCommand" };
-                        // frmCustom c = new frmCustom();
-                        // c.slideDir = "in";
-                        // c.ShowDialog();
                     }
                 }
                 return new ActionResult() { success = true, msg = "ShellCommandsLoaded" };
@@ -179,6 +162,7 @@ namespace R_Lib
             }
             finally { if (!speech_conn) { db.conn.Close(); } }
         }
+
         public void loadDictationGrammar()
         {
             Grammar dictate = new DictationGrammar();
@@ -210,7 +194,7 @@ namespace R_Lib
                 SqlCeDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    R_SpeakAsync(rdr[2].ToString());
+                    SpeakAsync(rdr[2].ToString());
                     _ = rdr[3].ToString() != "" ? Process.Start(rdr[3].ToString()) : null;
                 }
             }
@@ -220,13 +204,14 @@ namespace R_Lib
         void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string speech = e.Result.Text;
+            rtb_Convo.AppendText("ME: " + speech);
+
             string speech_filtered = speech.Replace("'", "''");
             try
             {
-
+                // userSpeech = speech;
                 SqlCeCommand cmd = db.conn.CreateCommand();
-                userSpeech = speech;
-                cmd.CommandText = "SELECT Method_resp FROM tblSysCommands where (Q_Event='" + R_QEvent + "' and Cmd='" + speech_filtered + "') OR (Q_Event='Default' and Cmd='" + speech_filtered + "')";
+                cmd.CommandText = "SELECT Method_resp FROM tblSysCommands where (Q_Event='" + QEvent + "' and Cmd='" + speech_filtered + "') OR (Q_Event='Default' and Cmd='" + speech_filtered + "')";
                 //MessageBox.Show(cmd.CommandText);
                 if (db.conn.State != ConnectionState.Open) { db.conn.Open(); }
                 SqlCeDataReader rdr = cmd.ExecuteReader();
@@ -237,7 +222,7 @@ namespace R_Lib
                 }
                 //db.conn.Close();
             }
-            catch (Exception ex) { R_SpeakAsync(ex.Message); }
+            catch (Exception ex) { SpeakAsync(ex.Message); }
             finally { db.conn.Close(); }
 
         }
@@ -247,7 +232,7 @@ namespace R_Lib
             {
                 if (google_search_switch)
                 {
-                    R_SpeakAsync("Querying google for " + e.Result.Text);
+                    SpeakAsync("Querying google for " + e.Result.Text);
                     Process.Start("https://www.google.com/search?q=" + e.Result.Text);
 
                     Dictation_Switch = false;
@@ -261,20 +246,22 @@ namespace R_Lib
         {
             if (methodName == "")
             {
-                R_SpeakAsync("No action specified for this command.");
+                SpeakAsync("No action specified for this command.");
                 return;
             }
 
             try
             {
-                Type thisType = this.GetType();
-                MethodInfo theMethod = thisType.GetMethod(methodName);
-                theMethod.Invoke(this, null);
+                // TODO: Cannot invoke method from project referencing this. Maybe need to move commands here in R_Lib
+                // Suggestion: Maybe pass whole instance of frmMain?
+                // Type thisType = this.GetType();
+                // MethodInfo theMethod = thisType.GetMethod(methodName);
+                // theMethod.Invoke(this, null);
             }
             catch (Exception ex)
             {
-                R_Speak("Specified method: " + methodName + " is not existing in my current schema. Perhaps a patch update is in order?");
-                commandReply = ex.Message;
+                Speak("Specified method: " + methodName + " is not existing in my current schema. Perhaps a patch update is in order?");
+                // commandReply = ex.Message;
             }
         }
     }

@@ -15,27 +15,27 @@ using System.Xml;
 
 namespace RIO
 {
-    public partial class Commands : frmMain
+    public class Commands
     {
         R_Lib.R_Speech R_Speech;
         Random rnd = new Random();
 
-        #region COMMANDS
+        frmMain main = FormControls.getForm<frmMain>();
 
         public void R_Greet()
         {
-            R_Speech.R_SpeakCancelAll();
+            R_Speech.SpeakCancelAll();
             stopReadingEmails();
             int num = rnd.Next(1, 31);
 
-            if (num <= 10) { R_Speech.R_SpeakAsync("Yes sir"); }
-            else if (num <= 20) { R_Speech.R_SpeakAsync("Yes"); }
-            else if (num <= 30) { R_Speech.R_SpeakAsync("How may i be of assistance?"); }
+            if (num <= 10) { R_Speech.SpeakAsync("Yes sir"); }
+            else if (num <= 20) { R_Speech.SpeakAsync("Yes"); }
+            else if (num <= 30) { R_Speech.SpeakAsync("How may i be of assistance?"); }
         }
         //Creator Info
         public void creatorInfo()
         {
-            R_Speech.R_SpeakAsync("I'd like to say Tony Stark, but actually, Arden created me. here, check out his google plus profile.");
+            R_Speech.SpeakAsync("I'd like to say Tony Stark, but actually, Arden created me. here, check out his google plus profile.");
             Process.Start("https://plus.google.com/+ArdenCristopherMendoza/posts/p/pub");
         }
         //LockScreen
@@ -58,43 +58,43 @@ namespace RIO
         #region rio Show/hide
         public void UI_onSystemTray()
         {
-            notifIcon.Visible = true;
-            notifIcon.BalloonTipText = "I'll be right here if you need anything else sir";
-            notifIcon.BalloonTipTitle = Application.ProductName;
-            notifIcon.BalloonTipIcon = ToolTipIcon.Info;
-            notifIcon.Text = "RIO hidden from view";
-            notifIcon.ShowBalloonTip(3000);
+            main.notifIcon.Visible = true;
+            main.notifIcon.BalloonTipText = "I'll be right here if you need anything else sir";
+            main.notifIcon.BalloonTipTitle = Application.ProductName;
+            main.notifIcon.BalloonTipIcon = ToolTipIcon.Info;
+            main.notifIcon.Text = "RIO hidden from view";
+            main.notifIcon.ShowBalloonTip(3000);
 
-            this.ShowInTaskbar = false;
-            this.Hide();
-            R_Speech.R_SpeakAsync(notifIcon.BalloonTipText);
+            main.ShowInTaskbar = false;
+            main.Hide();
+            R_Speech.SpeakAsync(main.notifIcon.BalloonTipText);
         }
         public void UI_rioOnTop()
         {
-            this.TopMost = true;
-            this.TopMost = false;
-            R_Speech.R_SpeakAsync("right here sir");
-            this.Visible = true;
+            main.TopMost = true;
+            main.TopMost = false;
+            R_Speech.SpeakAsync("right here sir");
+            main.Visible = true;
 
             UI_outOfSystemTrayrio(); UI_centerAlignIcon();
         }
         public void UI_outOfSystemTrayrio()
         {
-            notifIcon.Visible = false;
-            notifIcon.BalloonTipIcon = ToolTipIcon.Info;
-            this.ShowInTaskbar = true;
-            this.Visible = true;
+            main.notifIcon.Visible = false;
+            main.notifIcon.BalloonTipIcon = ToolTipIcon.Info;
+            main.ShowInTaskbar = true;
+            main.Visible = true;
         }
         public void UI_centerAlignIcon()
         {
             //R_Speech.R_SpeakAsync("in the middle of your screen");
             int scrnHeight = Screen.PrimaryScreen.WorkingArea.Height;
             int scrnWidth = Screen.PrimaryScreen.WorkingArea.Width;
-            int myHorCenter = this.img_rio.Width / 2;
-            int myVerCenter = this.img_rio.Height / 2;
+            int myHorCenter = main.img_rio.Width / 2;
+            int myVerCenter = main.img_rio.Height / 2;
 
-            this.Left = (scrnWidth / 2) - myHorCenter;
-            this.Top = (scrnHeight / 2) - myVerCenter;
+            main.Left = (scrnWidth / 2) - myHorCenter;
+            main.Top = (scrnHeight / 2) - myVerCenter;
 
             //this.Left = (scrnWidth / 2);
             //this.Top = (scrnHeight / 2);
@@ -108,15 +108,15 @@ namespace RIO
         {
             DateTime now = DateTime.Now;
             string time = now.GetDateTimeFormats('t')[0];
-            R_Speech.R_SpeakAsync(time);
+            R_Speech.SpeakAsync(time);
         }
         public void dayCheck()
         {
-            R_Speech.R_SpeakAsync(DateTime.Today.ToString("dddd"));
+            R_Speech.SpeakAsync(DateTime.Today.ToString("dddd"));
         }
         public void dateCheck()
         {
-            R_Speech.R_SpeakAsync(System.DateTime.Today.ToString("dd-MM-yyyy"));
+            R_Speech.SpeakAsync(System.DateTime.Today.ToString("dd-MM-yyyy"));
         }
         #endregion
 
@@ -144,14 +144,13 @@ namespace RIO
         }
         public void closeCommandWindow()
         {
-            FormControls R_Forms = new FormControls();
-            frmCustom cust = R_Forms.getForm<frmCustom>();
+            frmCustom cust = FormControls.getForm<frmCustom>();
             cust.isShown = false;
             cust.tmrSlide.Enabled = true;
         }
         public void UpdateCommands()
         {
-            R_Speech.R_SpeakAsync("This may take a few seconds");
+            R_Speech.SpeakAsync("This may take a few seconds");
             custom = new frmCustom();
             custom.CustomSave();
             try
@@ -162,15 +161,15 @@ namespace RIO
                 }
                 R_Speech.loadShellGrammar();
             }
-            catch (Exception ex) { R_Speech.R_SpeakAsync("Error while updating commands(UpdateCommands())\r\n" + ex.Message); }
+            catch (Exception ex) { R_Speech.SpeakAsync("Error while updating commands(UpdateCommands())\r\n" + ex.Message); }
 
-            R_Speech.R_SpeakAsync("All commands updated");
+            R_Speech.SpeakAsync("All commands updated");
         }
         public void UI_Closerio()
         {
-            R_Speech.R_SpeakCancelAll();
-            R_Speech.R_Speak("Till next time");
-            this.Close();
+            R_Speech.SpeakCancelAll();
+            R_Speech.Speak("Till next time");
+            main.Close();
         }
         public void ShowSystemCommands()
         {
@@ -194,7 +193,7 @@ namespace RIO
         public void getWeatherUpdate()
         {
             #region old  getWeatherUpdate function
-            R_Speech.R_SpeakAsync("Retrieving latest weather data");
+            R_Speech.SpeakAsync("Retrieving latest weather data");
             try
             {
                 if (getWeatherDetails())
@@ -214,7 +213,7 @@ namespace RIO
                                      "Conditions outside is " + Condition + " " +
                                      "with temperature at " + Temp + " degrees" + Unit + " " +
                                      ". There will be a wind speed of " + WindSpeed + " miles per hour";
-                    R_Speech.R_SpeakAsync(weather);
+                    R_Speech.SpeakAsync(weather);
                 }
             }
             catch
@@ -229,12 +228,12 @@ namespace RIO
                 string TFCond = Settings.Default.TFCond;
                 string TFHigh = Settings.Default.TFHigh;
                 string TFLow = Settings.Default.TFLow;
-                R_Speech.R_SpeakAsync("I am unable to retrieve the latest weather data right now.");
+                R_Speech.SpeakAsync("I am unable to retrieve the latest weather data right now.");
                 string weather = "The last time I checked was " + lastBuildDate + ". " +
                                  "The conditions outside was " + Condition + " " +
                                  "with temperature at " + Temp + " degrees" + Unit + " " +
                                  ". There will be a wind speed of " + WindSpeed + " miles per hour";
-                R_Speech.R_SpeakAsync(weather);
+                R_Speech.SpeakAsync(weather);
             }
             #endregion
         }
@@ -261,7 +260,7 @@ namespace RIO
             {
                 forecast = "We're currently not connected to the Internet. The latest weather data I acquired was last" + lastBuildDate + " it says. There will be " + TFCond + " in " + Town + " with a high of " + TFHigh + " and a low of " + TFLow;
             }
-            R_Speech.R_SpeakAsync(forecast);
+            R_Speech.SpeakAsync(forecast);
         }
         public bool getWeatherDetails()
         {
@@ -311,7 +310,7 @@ namespace RIO
             }
             catch (Exception ex)
             {
-                R_Speech.R_SpeakAsync("An error occured while trying to retrieve weather details. \r\n 'getWeatherDetails()' \r\n" + ex.Message);
+                R_Speech.SpeakAsync("An error occured while trying to retrieve weather details. \r\n 'getWeatherDetails()' \r\n" + ex.Message);
                 return false;
             }
         }
@@ -331,7 +330,7 @@ namespace RIO
             int vol = Settings.Default.VolIncDec;
             for (int i = 0; i < vol; i++)
             {
-                SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr)APPCOMMAND_VOLUME_UP);
+                SendMessageW(main.Handle, WM_APPCOMMAND, main.Handle, (IntPtr)APPCOMMAND_VOLUME_UP);
             }
             //R_Speech.R_SpeakAsync("Increased volume by" + vol + " times twice");
         }
@@ -340,14 +339,14 @@ namespace RIO
             int vol = Settings.Default.VolIncDec;
             for (int i = 0; i < vol; i++)
             {
-                SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr)APPCOMMAND_VOLUME_DOWN);
+                SendMessageW(main.Handle, WM_APPCOMMAND, main.Handle, (IntPtr)APPCOMMAND_VOLUME_DOWN);
             }
 
             //R_Speech.R_SpeakAsync("Decreased volume by" + vol + " times twice");
         }
         public void mute()
         {
-            SendMessageW(this.Handle, WM_APPCOMMAND, this.Handle, (IntPtr)APPCOMMAND_VOLUME_MUTE);
+            SendMessageW(main.Handle, WM_APPCOMMAND, main.Handle, (IntPtr)APPCOMMAND_VOLUME_MUTE);
         }
         #endregion 
 
@@ -364,8 +363,8 @@ namespace RIO
         #endregion
         public void getUnreadEmails()
         {
-            R_Speech.R_SpeakCancelAll();
-            R_Speech.R_SpeakAsync("Checking");
+            R_Speech.SpeakCancelAll();
+            R_Speech.SpeakAsync("Checking");
             TempCounter = 0;
             emailID = 0;
             try
@@ -412,12 +411,12 @@ namespace RIO
                         TempCounter++;
                     }
                     if (Convert.ToInt32(nr) == 0)
-                    { R_Speech.R_SpeakAsync("You have no new emails"); }
+                    { R_Speech.SpeakAsync("You have no new emails"); }
                     else
                     {
-                        R_Speech.R_QEvent = "read email";
-                        R_Speech.R_AEvent = "";
-                        R_Speech.R_Speak("You have " + nr + " new emails. I can read the latest 20 items. Would you like me to read them for you sir?");
+                        R_Speech.QEvent = "read email";
+                        R_Speech.AEvent = "";
+                        R_Speech.Speak("You have " + nr + " new emails. I can read the latest 20 items. Would you like me to read them for you sir?");
                     }
                 }
                 catch (Exception ex)
@@ -425,11 +424,11 @@ namespace RIO
                     MessageBox.Show("Error: " + ex.Message + "\n" + ex.ToString());
                     if (ex.Message == "The remote name could not be resolved: 'mail.google.com'")
                     {
-                        R_Speech.R_SpeakAsync("I'm sorry sir, it appears we cannot connect to the email server.");
+                        R_Speech.SpeakAsync("I'm sorry sir, it appears we cannot connect to the email server.");
                     }
                     else
                     {
-                        R_Speech.R_SpeakAsync("invalid login information");
+                        R_Speech.SpeakAsync("invalid login information");
                         custom = new frmCustom();
                         custom.Show();
                         custom.isShown = true;
@@ -445,8 +444,8 @@ namespace RIO
         }
         public void stopReadingEmails()
         {
-            R_Speech.R_QEvent = "";
-            R_Speech.R_AEvent = "";
+            R_Speech.QEvent = "";
+            R_Speech.AEvent = "";
             ArraySenderEmail = null;
             ArraySenderName = null;
             ArrayTitle = null;
@@ -455,46 +454,46 @@ namespace RIO
         }
         public void readEmail()
         {
-            R_Speech.R_SpeakCancelAll();
-            MessageBox.Show("[readEmail] R_Speech.R_QEvent: " + R_Speech.R_QEvent + " | R_Speech.R_AEvent: " + R_Speech.R_AEvent);
-            if (R_Speech.R_QEvent == "read email" && R_Speech.R_AEvent == "yes")
+            R_Speech.SpeakCancelAll();
+            MessageBox.Show("[readEmail] R_Speech.R_QEvent: " + R_Speech.QEvent + " | R_Speech.R_AEvent: " + R_Speech.AEvent);
+            if (R_Speech.QEvent == "read email" && R_Speech.AEvent == "yes")
             {
                 nextEmail();
             }
-            else { R_Speech.R_SpeakAsync("I'm not going to read your emails"); }
+            else { R_Speech.SpeakAsync("I'm not going to read your emails"); }
         }
         public void nextEmail()
         {
-            R_Speech.R_SpeakCancelAll();
-            if (R_Speech.R_QEvent == "read email" && R_Speech.R_AEvent == "yes")
+            R_Speech.SpeakCancelAll();
+            if (R_Speech.QEvent == "read email" && R_Speech.AEvent == "yes")
             {
                 if (emailID < TempCounter)
                 {
-                    R_Speech.R_SpeakAsync("E-mail number " + (emailID + 1) + " from " + ArraySenderName[emailID] + ". The Summary reads: " + ArraySummary[emailID]);
+                    R_Speech.SpeakAsync("E-mail number " + (emailID + 1) + " from " + ArraySenderName[emailID] + ". The Summary reads: " + ArraySummary[emailID]);
                     ShowEmailForm(ArrayTitle[emailID], ArraySummary[emailID], ArraySenderName[emailID], ArrayHref[emailID]);
                     emailID++;
                 }
                 else
-                { R_Speech.R_SpeakAsync("no more emails to read"); }
+                { R_Speech.SpeakAsync("no more emails to read"); }
             }
         }
         public void previousEmail()
         {
-            R_Speech.R_SpeakCancelAll();
+            R_Speech.SpeakCancelAll();
             emailID--;
-            if (R_Speech.R_QEvent == "read email")
+            if (R_Speech.QEvent == "read email")
             {
-                if (R_Speech.R_AEvent == "yes")
+                if (R_Speech.AEvent == "yes")
                 {
                     if (emailID >= 1)
                     {
-                        R_Speech.R_SpeakAsync("Email from: " + ArraySenderName[emailID] + ". The Summary reads: " + ArraySummary[emailID]);
+                        R_Speech.SpeakAsync("Email from: " + ArraySenderName[emailID] + ". The Summary reads: " + ArraySummary[emailID]);
                         ShowEmailForm(ArrayTitle[emailID], ArraySummary[emailID], ArraySenderName[emailID], ArrayHref[emailID]);
                     }
 
                     else
                     {
-                        R_Speech.R_SpeakAsync("No more newer email.");
+                        R_Speech.SpeakAsync("No more newer email.");
                         emailID = 0;
                     }
                 }
@@ -519,17 +518,17 @@ namespace RIO
 
         public void QEvent_Email_Yes()
         {
-            if (R_Speech.R_QEvent == "read email")
+            if (R_Speech.QEvent == "read email")
             {
-                R_Speech.R_SpeakCancelAll();
-                R_Speech.R_AEvent = "yes";
+                R_Speech.SpeakCancelAll();
+                R_Speech.AEvent = "yes";
                 readEmail();
-                R_Speech.R_AEvent = "";
+                R_Speech.AEvent = "";
             }
         }
         public void QEvent_Email_No()
         {
-            R_Speech.R_AEvent = "no";
+            R_Speech.AEvent = "no";
         }
 
         #endregion
@@ -539,7 +538,7 @@ namespace RIO
         {
             WebServices.Unit_Converters converter = new WebServices.Unit_Converters();
             string result = converter.ConvertLength(13, Lengths.Inches, Lengths.Kilometers);
-            R_Speech.R_SpeakAsync(result);
+            R_Speech.SpeakAsync(result);
         }
         #endregion
 
@@ -547,14 +546,14 @@ namespace RIO
         public void ws_get_weather()
         {
             WebServices.Weather weather = new WebServices.Weather();
-            rt_Convo.AppendText(weather.getWeather());
-            R_Speech.R_SpeakAsync("Got it.");
+            main.rt_Convo.AppendText(weather.getWeather());
+            R_Speech.SpeakAsync("Got it.");
         }
         #endregion WebService weather
 
         #region WebService Periodic Table
         WebServices.PeriodicTable PeriodicTable = new WebServices.PeriodicTable();
-        public void get_AtomicNumber() { rt_Convo.AppendText(PeriodicTable.get_AtomicNumber("Tungsten")); }
+        public void get_AtomicNumber() { main.rt_Convo.AppendText(PeriodicTable.get_AtomicNumber("Tungsten")); }
         public void get_AtomicWeight() { MessageBox.Show(PeriodicTable.get_AtomicWeight("Tungsten")); }
         public void get_Atoms() { MessageBox.Show(PeriodicTable.get_Atoms()); }
         public void get_ElementSymbol() { MessageBox.Show(PeriodicTable.get_ElementSymbol("Tungsten")); }
@@ -566,7 +565,7 @@ namespace RIO
         {
             //rt_Convo.AppendText("Unloading Default grammars");
             //R_Speech.R_recognizer.UnloadAllGrammars();
-            R_Speech.R_SpeakAsync("Search about?");
+            R_Speech.SpeakAsync("Search about?");
 
             //rt_Convo.AppendText("Loading dictation grammar");
             R_Speech.loadDictationGrammar();
@@ -577,7 +576,5 @@ namespace RIO
         }
         #endregion Google Search
 
-
-        #endregion
     }
 }

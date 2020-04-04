@@ -15,12 +15,13 @@ using R_Lib.WebServiceSunsertRise;
 using R_Lib.WebServicePeriodicTable;
 using System.Xml.Linq;
 using R_Lib;
+using System.Speech.Recognition;
+using System.ComponentModel;
 
 namespace RIO
 {
     public partial class frmMain : Form
     {
-        FormControls R_Forms = new FormControls();
 
         R_Lib.R_Speech R_Speech;
 
@@ -28,10 +29,10 @@ namespace RIO
         bool FormDragging = false;
         private void img_rio_MouseDown(object sender, MouseEventArgs e)
         {
-            R_Forms.mouseStartX= MousePosition.X;
-            R_Forms.mouseStartY = MousePosition.Y;
-            R_Forms.formStartX = this.Location.X;
-            R_Forms.formStartY = this.Location.Y;
+            FormControls.mouseStartX= MousePosition.X;
+            FormControls.mouseStartY = MousePosition.Y;
+            FormControls.formStartX = this.Location.X;
+            FormControls.formStartY = this.Location.Y;
             FormDragging = true;
         }
         private void img_rio_MouseMove(object sender, MouseEventArgs e)
@@ -39,8 +40,8 @@ namespace RIO
             if (FormDragging)
             {
                 this.Location = new Point(
-                R_Forms.formStartX + MousePosition.X - R_Forms.mouseStartX,
-                R_Forms.formStartY + MousePosition.Y - R_Forms.mouseStartY
+                FormControls.formStartX + MousePosition.X - FormControls.mouseStartX,
+                FormControls.formStartY + MousePosition.Y - FormControls.mouseStartY
                 );
             }
 
@@ -55,19 +56,21 @@ namespace RIO
         public frmMain()
         {
             InitializeComponent();
-            R_Speech = new R_Lib.R_Speech();
+            //rt_Convo.DataBindings.Add("Text", R_Speech, "conversation", true, DataSourceUpdateMode.OnPropertyChanged);
         }
+
+        // CONVERSATION
 
         public void frmMain_Load(object sender, EventArgs e)
         {
+            R_Speech = new R_Lib.R_Speech(FormControls.getForm<frmMain>().rt_Convo);
+
             #region setup db connection
 
             //System.IO.File.Delete(Application.StartupPath + @"\rioDB.sdf"); //Testing script
             #endregion setup db connection
 
-            #region Load default grammars
             R_Speech.loadSystemVocabs(); // load rio default commands
-            R_Speech.R_SpeakAsync("System commands loaded");
             // loadShellGrammar
             ActionResult shellGrammar = R_Speech.loadShellGrammar();
             if (shellGrammar.success)
@@ -82,11 +85,13 @@ namespace RIO
             {
                 MessageBox.Show(shellGrammar.msg);
             }
-
-            R_Speech.R_SpeakAsync("User commands loaded");
             //loadDictationGrammar();
             //R_Speech.R_SpeakAsync("Dictation grammars loaded");
-            #endregion Load default grammars
+
+            // load default microphone
+            R_Speech.R_recognizer.SetInputToDefaultAudioDevice();
+            // sets the program to interpret multiple commands
+            R_Speech.R_recognizer.RecognizeAsync(RecognizeMode.Multiple);
         }
 
 

@@ -12,7 +12,6 @@ namespace RIO
 {
     public partial class frmCustom : Form
     {
-        FormControls R_Forms = new FormControls();
 
         R_Lib.R_Speech R_Speech;
         R_Lib.R_db_conn db = new R_Lib.R_db_conn(Application.StartupPath);
@@ -22,7 +21,7 @@ namespace RIO
         public frmCustom()
         {
             InitializeComponent();
-            R_Speech = new R_Lib.R_Speech();
+            R_Speech = new R_Lib.R_Speech(FormControls.getForm<frmMain>().rt_Convo);
             string StartUpPath = Application.StartupPath;
             db.conn = new SqlCeConnection(db.R_conn_string);
             db.conn.ConnectionString = db.R_conn_string;
@@ -120,7 +119,7 @@ namespace RIO
                 }
                 catch 
                 {
-                    R_Speech.R_Speak("Please provide a valid W.O.E.I.D.");
+                    R_Speech.Speak("Please provide a valid W.O.E.I.D.");
                     Process.Start("http://isithackday.com/geoplanet-explorer/index.php");
                     tabControl1.SelectedIndex = 1;
                     txtWOEID.Focus();
@@ -177,7 +176,7 @@ namespace RIO
                 if (db.conn.State != System.Data.ConnectionState.Open) { db.conn.Open(); }
 
                 db.cmd.ExecuteNonQuery();
-                R_Speech.R_SpeakAsync("new commands added");
+                R_Speech.SpeakAsync("new commands added");
             }
             catch(Exception ex) {
                 Program.UISpeak("An error occured while trying to add custom commands.\r\n" + ex.Message);
@@ -198,13 +197,13 @@ namespace RIO
             {
                 if (db.conn.State != System.Data.ConnectionState.Open) { db.conn.Open(); }
                 db.cmd.ExecuteNonQuery();
-                R_Speech.R_SpeakAsync(cmdForDeleting + " command deleted");
+                R_Speech.SpeakAsync(cmdForDeleting + " command deleted");
                 db.conn.Close();
                 loadUserCommands();
             }
             catch 
             { 
-                R_Speech.R_SpeakAsync(cmdForDeleting + " command not deleted.");
+                R_Speech.SpeakAsync(cmdForDeleting + " command not deleted.");
             }
         }
 

@@ -7,15 +7,15 @@ using System.Windows.Forms;
 
 namespace RIO
 {
-    public class FormControls
+    public static class FormControls
     {
 
-        public int mouseStartX { get; set; }
-        public int mouseStartY { get; set; }
-        public int formStartX { get; set; }
-        public int formStartY { get; set; }
+        public static int mouseStartX { get; set; }
+        public static int mouseStartY { get; set; }
+        public static int formStartX { get; set; }
+        public static int formStartY { get; set; }
 
-        public TForm getForm<TForm>() where TForm : Form
+        public static TForm getForm<TForm>() where TForm : Form
         {
             return (TForm)Application.OpenForms.OfType<TForm>().FirstOrDefault();
         }

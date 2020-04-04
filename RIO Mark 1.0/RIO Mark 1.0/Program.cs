@@ -21,7 +21,7 @@ namespace RIO
 
         public static void UISpeak(string msg)
         {
-            R_Speech.R_SpeakAsync(msg);
+            R_Speech.SpeakAsync(msg);
             MessageBox.Show(msg);
         }
     }
