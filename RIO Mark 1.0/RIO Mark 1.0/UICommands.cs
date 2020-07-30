@@ -15,7 +15,7 @@ using System.Xml;
 
 namespace RIO
 {
-    public class Commands
+    public class UICommands
     {
         R_Lib.R_Speech R_Speech;
         Random rnd = new Random();
@@ -178,7 +178,7 @@ namespace RIO
             // SqlCeCommand cmd = R_Lib.db.conn.CreateCommand();
             // cmd.CommandText = "SELECT Cmd FROM tblSysCommands";
             // if (db.conn.State != ConnectionState.Open) { if (db.conn.State != ConnectionState.Open) { db.conn.Open(); }; }
-               
+
             // SqlCeDataReader rdr = cmd.ExecuteReader();
             // while (rdr.Read())
             // {

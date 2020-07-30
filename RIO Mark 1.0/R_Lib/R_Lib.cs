@@ -219,6 +219,7 @@ namespace R_Lib
                 {
                     speech_conn = true;
                     exec_method(rdr[0].ToString());
+                    SpeakAsync("I heard you say " + speech_filtered);
                 }
                 //db.conn.Close();
             }
@@ -254,9 +255,9 @@ namespace R_Lib
             {
                 // TODO: Cannot invoke method from project referencing this. Maybe need to move commands here in R_Lib
                 // Suggestion: Maybe pass whole instance of frmMain?
-                // Type thisType = this.GetType();
-                // MethodInfo theMethod = thisType.GetMethod(methodName);
-                // theMethod.Invoke(this, null);
+                //Type thisType = this.GetType();
+                //MethodInfo theMethod = thisType.GetMethod(methodName);
+                //theMethod.Invoke(this, null);
             }
             catch (Exception ex)
             {

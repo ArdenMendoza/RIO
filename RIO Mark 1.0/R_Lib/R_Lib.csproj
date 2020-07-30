@@ -59,7 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DBCon.cs" />
     <Compile Include="db_scripts.cs" />
     <Compile Include="R_DBCommands.cs" />
